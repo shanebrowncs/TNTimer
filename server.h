@@ -29,5 +29,6 @@
 void start_server();
 
 int fd;
+char* port;
 
 #endif

@@ -35,7 +35,8 @@ static onion_connection_status strip_rpc(void *_, onion_request *req, onion_resp
 }
 
 void start_server(void){
-	fd = serialport_init("/dev/ttyUSB1", 9600);
+	printf("Starting connection port %s\n", port);
+	fd = serialport_init(port, 9600);
 	serialport_flush(fd);
 
 	if(fd == -1){
