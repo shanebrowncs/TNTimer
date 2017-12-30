@@ -11,23 +11,24 @@
 static onion_connection_status strip_rpc(void *_, onion_request *req, onion_response *res){
 	const onion_block *dreq=onion_request_get_data(req);
 	if (dreq){
-		printf("parsing json\n");
 		const char* jsonData = onion_block_data(dreq);
 		printf("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n%s\n\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\n", jsonData);
 		json_object* jobj = json_tokener_parse(jsonData);
 
-		json_object* roundObj = json_object_object_get(jobj, "round");
+		json_object* roundObj;
+		json_object_object_get_ex(jobj, "round", &roundObj);
 		if(roundObj != NULL){
-			json_object* bombObj = json_object_object_get(roundObj, "bomb");
+			json_object* bombObj;
+			json_object_object_get_ex(roundObj, "bomb", &bombObj);
 			if(strcmp(json_object_to_json_string(bombObj), "\"planted\"") == 0){
-				printf("bomb is planted\n");
+				printf("//////BOMB PLANTED - START COUNTDOWN//////\n");
 				serialport_writebyte(fd, 1);
 			}
 		}else{
-			printf("Round obj is null\n");
+			printf("'round' json object is null\n");
 		}
 	}else{
-		printf("dereq false\n");
+		printf("Invalid json request\n");
 	}
 
 	return OCS_PROCESSED;
