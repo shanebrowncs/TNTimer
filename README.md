@@ -1,5 +1,5 @@
-# BombTimer
-CSGO Bomb timer implemented using Game State Integration with C and Arduino
+# TNTimer
+Counter-Strike LED explosive time indicator implemented using Game State Integration with C and Arduino
 
 ```
 ./bombtimer
